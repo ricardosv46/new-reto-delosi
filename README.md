@@ -32,7 +32,11 @@ No requiere variables de entorno. La URL base de la API (`https://fakestoreapi.c
 
 ```
 src/
-├── app/                          # Rutas (App Router) — shells delgados, sin lógica de negocio
+├── app/                          # Rutas y shell (App Router) — composición, sin lógica de negocio
+│   ├── layout.tsx                # compone Header + CartButton, Footer, WebVitals y el drawer
+│   ├── Header.tsx / Footer.tsx   # chrome de la app; el carrito entra al header por children
+│   ├── WebVitals.tsx             # medición RUM, montada una sola vez
+│   ├── globals.css
 │   ├── page.tsx                  # PLP: generateMetadata (canonical por categoría) + Suspense/Skeleton
 │   ├── robots.ts / sitemap.ts    # robots.txt y sitemap.xml (home, categorías y las PDP)
 │   ├── api/vitals/route.ts       # recibe los Web Vitals del navegador y los registra
@@ -41,7 +45,8 @@ src/
 │
 ├── shared/                       # Kernel compartido (técnico, no de dominio)
 │   ├── lib/                      # siteUrl (URL base para SEO), webVitals (medición y validación)
-│   └── presentation/             # Header, Footer, Skeleton, WebVitals, useMounted, estilos globales
+│   ├── ui/                       # primitivas visuales (Skeleton)
+│   └── hooks/                    # hooks genéricos (useMounted)
 │
 └── modules/                      # Un módulo = una feature
     ├── products/
@@ -64,7 +69,7 @@ Reglas del proyecto:
 - **Screaming architecture**: las carpetas hablan del negocio (`products`, `cart`), no de capas técnicas.
 - **Server first**: el fetch inicial ocurre en Server Components (`page.tsx` → `api.ts`). Los hooks quedan solo para estado de cliente (filtros, carrito, drawer).
 - **Componentes presentacionales**: reciben datos y callbacks por props (p. ej. `ProductCard` recibe `onAddToCart`). La lógica de negocio vive en funciones puras (`lib/`) testeables sin React.
-- **Dirección de dependencias**: `products` usa el carrito (botón "agregar") y `cart` solo importa los tipos de `products`.
+- **Dirección de dependencias**: `shared` no importa módulos. `products` usa el carrito (botón "agregar") y `cart` solo importa los tipos de `products`. El layout es el punto de composición: mete `CartButton` dentro de `Header`.
 
 ### Filtros, SEO y URL
 
@@ -139,7 +144,7 @@ npm test
 npm run test:coverage
 ```
 
-`collectCoverageFrom` cubre `src/modules/**`, `src/shared/**`, `error.tsx`, `not-found.tsx` y la página de la PDP (tipos y fixtures de test excluidos). `jest.config.ts` define un **umbral global de 80%** (statements, branches, functions y lines): `npm run test:coverage` falla si baja de ahí. Solo queda fuera de la métrica `layout.tsx`, que es composición pura del shell (fuentes, Header, Footer).
+`collectCoverageFrom` cubre `src/modules/**`, `src/shared/**`, el shell de `app` (`Header`, `Footer`, `WebVitals`), `error.tsx`, `not-found.tsx` y la página de la PDP (tipos y fixtures de test excluidos). `jest.config.ts` define un **umbral global de 80%** (statements, branches, functions y lines): `npm run test:coverage` falla si baja de ahí. Solo queda fuera de la métrica `layout.tsx`, que es composición pura del shell (fuentes, Header, Footer, carrito).
 
 ## Pendientes / siguientes pasos
 

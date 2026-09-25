@@ -3,13 +3,21 @@ import { Header } from './Header';
 
 describe('Header', () => {
   it('should link the brand to the home page', () => {
-    render(<Header />);
+    render(
+      <Header>
+        <span />
+      </Header>
+    );
 
     expect(screen.getByRole('link', { name: /Delosi/ })).toHaveAttribute('href', '/');
   });
 
-  it('should include the cart button so the item count is always visible', () => {
-    render(<Header />);
+  it('should render the slot the layout passes in, such as the cart button', () => {
+    render(
+      <Header>
+        <button type="button">Abrir carrito</button>
+      </Header>
+    );
 
     expect(screen.getByRole('button', { name: 'Abrir carrito' })).toBeInTheDocument();
   });

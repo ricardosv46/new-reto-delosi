@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { X, Trash2, Plus, Minus, ShoppingCart, BadgeCheck, ArrowRight } from 'lucide-react';
 import { useCartStore } from '../hooks/useCartStore';
 import { useCartDrawerStore } from '../hooks/useCartDrawerStore';
-import { useMounted } from '@/shared/presentation/hooks/useMounted';
+import { useMounted } from '@/shared/hooks/useMounted';
 
 interface ConfirmedOrder {
   code: string;

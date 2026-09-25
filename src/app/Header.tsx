@@ -1,7 +1,11 @@
+import type { ReactNode } from 'react';
 import Link from 'next/link';
-import { CartButton } from '@/modules/cart/components/CartButton';
 
-export function Header() {
+interface HeaderProps {
+  children: ReactNode;
+}
+
+export function Header({ children }: HeaderProps) {
   return (
     <header className="sticky top-0 z-40 h-[68px] w-full border-b border-border bg-background/90 backdrop-blur-md">
       <div className="mx-auto flex h-full max-w-[1280px] items-center justify-between px-6">
@@ -14,7 +18,7 @@ export function Header() {
           </span>
         </Link>
 
-        <CartButton />
+        {children}
       </div>
     </header>
   );

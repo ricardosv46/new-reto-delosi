@@ -4,7 +4,7 @@ import React from 'react';
 import { ShoppingBag } from 'lucide-react';
 import { useCartStore } from '../hooks/useCartStore';
 import { useCartDrawerStore } from '../hooks/useCartDrawerStore';
-import { useMounted } from '@/shared/presentation/hooks/useMounted';
+import { useMounted } from '@/shared/hooks/useMounted';
 
 export const CartButton: React.FC = () => {
   const items = useCartStore((state) => state.items);

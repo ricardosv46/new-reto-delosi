@@ -4,7 +4,7 @@ import { useCartStore } from '../hooks/useCartStore';
 import { buildProduct } from '@/modules/products/testing/buildProduct';
 
 // Before hydration the badge must stay hidden even if localStorage already has items.
-jest.mock('../../../shared/presentation/hooks/useMounted', () => ({ useMounted: () => false }));
+jest.mock('../../../shared/hooks/useMounted', () => ({ useMounted: () => false }));
 
 describe('CartButton before hydration', () => {
   it('should not render the badge from persisted items', () => {

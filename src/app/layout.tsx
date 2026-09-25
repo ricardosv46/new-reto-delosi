@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import '@/shared/presentation/styles/globals.css';
-import { Header } from '@/shared/presentation/components/Header';
-import { Footer } from '@/shared/presentation/components/Footer';
-import { WebVitals } from '@/shared/presentation/components/WebVitals';
+import './globals.css';
+import { Header } from './Header';
+import { Footer } from './Footer';
+import { WebVitals } from './WebVitals';
+import { CartButton } from '@/modules/cart/components/CartButton';
 import { CartDrawer } from '@/modules/cart/components/CartDrawer';
 import { getSiteUrl } from '@/shared/lib/siteUrl';
 
@@ -35,7 +36,9 @@ export default function RootLayout({
     <html lang="es" className={`${inter.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col bg-background text-foreground">
         <WebVitals />
-        <Header />
+        <Header>
+          <CartButton />
+        </Header>
 
         <main className="mx-auto w-full max-w-7xl flex-1 px-6 py-6">{children}</main>
 
